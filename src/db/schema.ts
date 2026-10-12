@@ -8,6 +8,7 @@ import {
   integer,
 } from 'drizzle-orm/pg-core'
 import { relations } from 'drizzle-orm'
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
@@ -106,3 +107,18 @@ export const habitTagsRelations = relations(habitTags, ({ one }) => ({
     references: [tags.id],
   }),
 }))
+
+export type User = typeof users.$inferSelect
+export type Habit = typeof habits.$inferSelect
+export type Entry = typeof entries.$inferSelect
+export type Tag = typeof tags.$inferSelect
+export type HabitTag = typeof habitTags.$inferSelect
+
+export const insertUserSchema = createInsertSchema(users)
+export const selectUserSchema = createSelectSchema(users)
+
+export const insertHabitSchema = createInsertSchema(habits)
+
+export const insertEntrySchema = createInsertSchema(entries)
+
+export const insertTagSchema = createInsertSchema(tags)
