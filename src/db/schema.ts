@@ -16,8 +16,8 @@ export const users = pgTable('users', {
   username: varchar('username', { length: 50 }).notNull(),
   password: varchar('password', { length: 255 }).notNull(),
 
-  firstName: varchar('first_name', { length: 50 }).notNull(),
-  lastName: varchar('last_name', { length: 50 }).notNull(),
+  firstName: varchar('first_name', { length: 50 }),
+  lastName: varchar('last_name', { length: 50 }),
 
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
@@ -109,6 +109,7 @@ export const habitTagsRelations = relations(habitTags, ({ one }) => ({
 }))
 
 export type User = typeof users.$inferSelect
+export type NewUser = typeof users.$inferInsert
 export type Habit = typeof habits.$inferSelect
 export type Entry = typeof entries.$inferSelect
 export type Tag = typeof tags.$inferSelect
